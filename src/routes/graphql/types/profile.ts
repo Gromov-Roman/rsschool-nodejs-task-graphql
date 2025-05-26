@@ -8,6 +8,7 @@ import {
 } from 'graphql';
 import { UUIDType } from './uuid.js';
 import { MemberTypeType, MemberTypeIdType } from './member-type.js';
+import { Context, MemberType, Profile } from './interfaces.js';
 
 export const ProfileType = new GraphQLObjectType({
   name: 'Profile',
@@ -15,7 +16,16 @@ export const ProfileType = new GraphQLObjectType({
     id: { type: new GraphQLNonNull(UUIDType) },
     isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
     yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
-    memberType: { type: new GraphQLNonNull(MemberTypeType) },
+    memberType: {
+      type: MemberTypeType,
+      resolve: async (
+        profile: Profile,
+        _args,
+        { loaders }: Context,
+      ): Promise<MemberType | null> => {
+        return loaders.memberType.load(profile.memberTypeId);
+      },
+    },
   }),
 });
 

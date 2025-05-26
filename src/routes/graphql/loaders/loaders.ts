@@ -36,10 +36,10 @@ export const postLoader = (prisma: PrismaClient) => {
     const postsByAuthorsMap = new Map<string, Post[]>();
 
     posts.forEach((post) => {
-      const authorPosts = postsByAuthorsMap.get(post.authorId) || [];
-
-      authorPosts.push(post);
-      postsByAuthorsMap.set(post.authorId, authorPosts);
+      if (!postsByAuthorsMap.has(post.authorId)) {
+        postsByAuthorsMap.set(post.authorId, []);
+      }
+      postsByAuthorsMap.get(post.authorId)!.push(post);
     });
 
     return ids.map((key) => postsByAuthorsMap.get(key) || []);
@@ -75,11 +75,10 @@ export const userSubscribedToLoader = (prisma: PrismaClient) => {
     const subscribersByAuthorsMap = new Map<string, User[]>();
 
     subscribers.forEach((subscriber) => {
-      const authorSubscribers =
-        subscribersByAuthorsMap.get(subscriber.subscriberId) || [];
-
-      authorSubscribers.push(subscriber.author);
-      subscribersByAuthorsMap.set(subscriber.subscriberId, authorSubscribers);
+      if (!subscribersByAuthorsMap.has(subscriber.subscriberId)) {
+        subscribersByAuthorsMap.set(subscriber.subscriberId, []);
+      }
+      subscribersByAuthorsMap.get(subscriber.subscriberId)!.push(subscriber.author);
     });
 
     return ids.map((key) => subscribersByAuthorsMap.get(key) || []);
@@ -101,10 +100,10 @@ export const subscribedToUserLoader = (prisma: PrismaClient) => {
     const authorsBySubscribersMap = new Map<string, Partial<User>[]>();
 
     authors.forEach((author) => {
-      const authorSubscribers = authorsBySubscribersMap.get(author.authorId) || [];
-
-      authorSubscribers.push(author.subscriber);
-      authorsBySubscribersMap.set(author.authorId, authorSubscribers);
+      if (!authorsBySubscribersMap.has(author.authorId)) {
+        authorsBySubscribersMap.set(author.authorId, []);
+      }
+      authorsBySubscribersMap.get(author.authorId)!.push(author.subscriber);
     });
 
     return ids.map((key) => authorsBySubscribersMap.get(key) || []);
