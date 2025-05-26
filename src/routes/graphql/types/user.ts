@@ -1,13 +1,10 @@
 import {
-  GraphQLBoolean,
   GraphQLInputObjectType,
-  GraphQLInt,
   GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLString,
 } from 'graphql';
-import { MemberTypeIdType } from './member-type.js';
 import { UUIDType } from './uuid.js';
 import { GraphQLFloat } from 'graphql/type/index.js';
 import { PostType } from './post.js';
@@ -17,7 +14,7 @@ import { Context, Post, Profile, User } from './interfaces.js';
 export const UserType: GraphQLObjectType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: { type: new GraphQLNonNull(UUIDType) },
+    id: { type: UUIDType },
     name: { type: new GraphQLNonNull(GraphQLString) },
     balance: { type: new GraphQLNonNull(GraphQLFloat) },
     profile: {
@@ -47,13 +44,11 @@ export const UserType: GraphQLObjectType = new GraphQLObjectType({
   }),
 });
 
-export const CreateProfileInput = new GraphQLInputObjectType({
-  name: 'CreateProfileInput',
+export const CreateUserInput = new GraphQLInputObjectType({
+  name: 'CreateUserInput',
   fields: () => ({
-    isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
-    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
-    userId: { type: new GraphQLNonNull(UUIDType) },
-    memberTypeId: { type: new GraphQLNonNull(MemberTypeIdType) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    balance: { type: new GraphQLNonNull(GraphQLFloat) },
   }),
 });
 

@@ -63,7 +63,7 @@ export const RootQueryType = new GraphQLObjectType({
     },
 
     users: {
-      type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(UserType))),
+      type: new GraphQLNonNull(new GraphQLList(UserType)),
       resolve: async (_, __, { prisma, loaders }: Context, info) => {
         const parsedInfo = parseResolveInfo(info);
         const userFields = parsedInfo?.fieldsByTypeName?.User as FieldsByTypeName['User'];

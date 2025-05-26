@@ -2,39 +2,23 @@ import { PrismaClient } from '@prisma/client';
 import { MemberTypeId } from '../../member-types/schemas.js';
 import DataLoader from 'dataloader';
 
-export interface CreateUserInput {
-  name: string;
-  balance: number;
-}
-
-export interface CreateProfileInput {
-  isMale: boolean;
-  yearOfBirth: number;
-  userId: string;
-  memberTypeId: MemberTypeId;
-}
-
-export interface CreatePostInput {
+export type PostInput = {
   title: string;
   content: string;
   authorId: string;
-}
+};
 
-export interface ChangeUserInput {
-  name?: string;
-  balance?: number;
-}
+export type UserInput = {
+  name: string;
+  balance: number;
+};
 
-export interface ChangeProfileInput {
-  isMale?: boolean;
-  yearOfBirth?: number;
-  memberTypeId?: MemberTypeId;
-}
-
-export interface ChangePostInput {
-  title?: string;
-  content?: string;
-}
+export type ProfileInput = {
+  userId: string;
+  memberTypeId: MemberTypeId;
+  isMale: boolean;
+  yearOfBirth: number;
+};
 
 export interface User {
   id: string;
