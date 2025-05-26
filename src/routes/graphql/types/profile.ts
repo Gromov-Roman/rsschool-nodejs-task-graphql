@@ -7,7 +7,17 @@ import {
   GraphQLString,
 } from 'graphql';
 import { UUIDType } from './uuid.js';
-import { MemberType, MemberTypeId } from './member-type.js';
+import { MemberTypeType, MemberTypeIdType } from './member-type.js';
+
+export const ProfileType = new GraphQLObjectType({
+  name: 'Profile',
+  fields: () => ({
+    id: { type: new GraphQLNonNull(UUIDType) },
+    isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
+    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
+    memberType: { type: new GraphQLNonNull(MemberTypeType) },
+  }),
+});
 
 export const CreateProfileInput = new GraphQLInputObjectType({
   name: 'CreateProfileInput',
@@ -15,7 +25,7 @@ export const CreateProfileInput = new GraphQLInputObjectType({
     isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
     yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
     userId: { type: new GraphQLNonNull(UUIDType) },
-    memberTypeId: { type: new GraphQLNonNull(MemberTypeId) },
+    memberTypeId: { type: new GraphQLNonNull(MemberTypeIdType) },
   }),
 });
 
@@ -24,15 +34,5 @@ export const ChangePostInput = new GraphQLInputObjectType({
   fields: () => ({
     title: { type: GraphQLString },
     content: { type: GraphQLString },
-  }),
-});
-
-export const Profile = new GraphQLObjectType({
-  name: 'Profile',
-  fields: () => ({
-    id: { type: new GraphQLNonNull(UUIDType) },
-    isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
-    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
-    memberType: { type: new GraphQLNonNull(MemberType) },
   }),
 });
