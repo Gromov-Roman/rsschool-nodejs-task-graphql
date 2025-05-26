@@ -3,7 +3,7 @@ import { UUIDType } from './types/uuid.js';
 import { ProfileType } from './types/profile.js';
 
 export const RootQueryType = new GraphQLObjectType({
-  name: 'Query',
+  name: 'RootQueryType',
   fields: {
     profile: {
       type: ProfileType,
